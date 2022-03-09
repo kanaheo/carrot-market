@@ -6,10 +6,10 @@ const Home: NextPage = () => {
       {new Array(10).fill(1).map((_, i) => (
         <div
           key={i}
-          className="flex px-4 border-b pb-4 cursor-pointer justify-between"
+          className="flex px-4  border-b pb-5 cursor-pointer justify-between"
         >
           <div className="flex space-x-4">
-            <div className="w-20 h20 bg-gray-400 rounded-md" />
+            <div className="w-20 h-20 bg-gray-400 rounded-md" />
             <div className="pt-2 flex flex-col">
               <h3 className="text-sm font-medium text-gray-900">
                 New iPhone 14
@@ -19,7 +19,7 @@ const Home: NextPage = () => {
             </div>
           </div>
           <div className="flex space-x-2 items-end justify-end">
-            <div className="flex space-x-0.5 items-center text-sm text-gray-600">
+            <div className="flex space-x-0.5 items-center text-sm  text-gray-600">
               <svg
                 className="w-4 h-4"
                 fill="none"
@@ -36,7 +36,7 @@ const Home: NextPage = () => {
               </svg>
               <span>1</span>
             </div>
-            <div className="flex space-x-0.5 items-center text-sm text-gray-600">
+            <div className="flex space-x-0.5 items-center text-sm  text-gray-600">
               <svg
                 className="w-4 h-4"
                 fill="none"
@@ -56,7 +56,7 @@ const Home: NextPage = () => {
           </div>
         </div>
       ))}
-      <button className="fixed hover:bg-orange-600 transition-colors bottom-24 right-5 bg-orange-500 rounded-full shadow-xl p-4 text-white">
+      <button className="fixed hover:bg-orange-500 transition-colors cursor-pointer  bottom-24 right-5 shadow-xl bg-orange-400 rounded-full p-4 text-white">
         <svg
           className="h-6 w-6"
           xmlns="http://www.w3.org/2000/svg"
