@@ -15,6 +15,11 @@ export default function Forms() {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
+    setValue,
+    setError, // 보통 백으로 갔다 온 이후에 에러를 넣어줌 ( 아이디가 존재여부 등등 )
+    reset, // form 전체 reset
+    resetField, // 특정 form reset
   } = useForm<LoginForm>({
     mode: "onChange",
   });
