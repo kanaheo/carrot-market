@@ -16,6 +16,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     update: {},
   });
 
+  // const token = await client.token
+
   console.log(user);
 
   // 아래 것을 더 쉽게 하는 upsert
