@@ -1,4 +1,3 @@
-import { prepareServerlessUrl } from "next/dist/server/base-server";
 import { useState } from "react";
 
 interface UseMutationState {
@@ -6,22 +5,16 @@ interface UseMutationState {
   data?: object;
   error?: object;
 }
-
 type UseMutationResult = [(data: any) => void, UseMutationState];
 
-export default function useMutation(
-  url: string
-): [
-  (data?: any) => void,
-  { loading: boolean; data: undefined | any; error: undefined | any }
-] {
-  const [state, setState] = useState({
+export default function useMutation(url: string): UseMutationResult {
+  const [state, setSate] = useState<UseMutationState>({
     loading: false,
     data: undefined,
     error: undefined,
   });
   function mutation(data: any) {
-    setState((prev) => ({ ...prev, loading: true }));
+    setSate((prev) => ({ ...prev, loading: true }));
     fetch(url, {
       method: "POST",
       headers: {
@@ -30,9 +23,9 @@ export default function useMutation(
       body: JSON.stringify(data),
     })
       .then((response) => response.json().catch(() => {}))
-      .then((data) => setState((prev) => ({ ...prev, data })))
-      .catch((error) => setState((prev) => ({ ...prev, error })))
-      .finally(() => setState((prev) => ({ ...prev, loading: true })));
+      .then((data) => setSate((prev) => ({ ...prev, data })))
+      .catch((error) => setSate((prev) => ({ ...prev, error })))
+      .finally(() => setSate((prev) => ({ ...prev, loading: false })));
   }
   return [mutation, { ...state }];
 }

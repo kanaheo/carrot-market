@@ -33,7 +33,7 @@ const Enter: NextPage = () => {
       <div className="mt-12">
         <div className="flex flex-col items-center">
           <h5 className="text-sm text-gray-500 font-medium">Enter using:</h5>
-          <div className="grid  border-b  w-full mt-8 grid-cols-2 ">
+          <div className="grid border-b  w-full mt-8 grid-cols-2 ">
             <button
               className={cls(
                 "pb-4 font-medium text-sm border-b-2",
@@ -75,9 +75,7 @@ const Enter: NextPage = () => {
           ) : null}
           {method === "phone" ? (
             <Input
-              register={register("phone", {
-                required: true,
-              })}
+              register={register("phone")}
               name="phone"
               label="Phone number"
               type="number"
