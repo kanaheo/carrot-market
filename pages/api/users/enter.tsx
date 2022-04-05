@@ -1,74 +1,34 @@
-import withHandler from "@libs/server/withHandler";
+import withHandler, { ResponseType } from "@libs/server/withHandler";
 import { NextApiRequest, NextApiResponse } from "next";
 import client from "@libs/server/client";
 
-async function handler(req: NextApiRequest, res: NextApiResponse) {
+async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<ResponseType>
+) {
   const { phone, email } = req.body;
-  const payload = phone ? { phone: +phone } : { email };
-
+  const user = phone ? { phone: +phone } : email ? { email } : null;
+  if (!user) return res.status(400).json({ ok: false });
+  const payload = Math.floor(100000 + Math.random() * 900000) + "";
   const token = await client.token.create({
     data: {
-      payload: "1234",
+      payload,
       user: {
         connectOrCreate: {
           where: {
-            ...payload,
+            ...user,
           },
           create: {
             name: "kkana",
-            ...payload,
+            ...user,
           },
         },
       },
     },
   });
-
-  console.log(token);
-
-  // 아래 것을 더 쉽게 하는 upsert
-
-  // if (email) {
-  //   user = await client.user.findUnique({
-  //     where: {
-  //       email,
-  //     },
-  //   });
-  //   if (!user) {
-  //     console.log("User Create !!");
-  //     user = await client.user.create({
-  //       data: {
-  //         name: "Annonymous",
-  //         email,
-  //       },
-  //     });
-  //   } else {
-  //     console.log("user found!");
-  //     console.log(user);
-  //   }
-  // }
-
-  // // phone
-  // if (phone) {
-  //   user = await client.user.findUnique({
-  //     where: {
-  //       phone: +phone,
-  //     },
-  //   });
-  //   if (!user) {
-  //     console.log("User Create !!");
-  //     user = await client.user.create({
-  //       data: {
-  //         name: "Annonymous",
-  //         phone: +phone,
-  //       },
-  //     });
-  //   } else {
-  //     console.log("user found!");
-  //     console.log(user);
-  //   }
-  // }
-
-  return res.status(200).end();
+  return res.json({
+    ok: true,
+  });
 }
 
 export default withHandler("POST", handler);

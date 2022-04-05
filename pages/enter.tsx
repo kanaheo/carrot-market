@@ -29,16 +29,16 @@ const Enter: NextPage = () => {
   };
   return (
     <div className="mt-16 px-4">
-      <h3 className="text-3xl font-bold text-center">Enter to Carrot</h3>
+      <h3 className="text-3xl font-bold text-center">Enter to KKana</h3>
       <div className="mt-12">
         <div className="flex flex-col items-center">
-          <h5 className="text-sm text-gray-500 font-medium">Enter using:</h5>
+          <h5 className="text-sm text-gray-500 font-medium">Enter GoGo!</h5>
           <div className="grid border-b  w-full mt-8 grid-cols-2 ">
             <button
               className={cls(
                 "pb-4 font-medium text-sm border-b-2",
                 method === "email"
-                  ? " border-orange-500 text-orange-400"
+                  ? " border-purple-500 text-purple-400"
                   : "border-transparent hover:text-gray-400 text-gray-500"
               )}
               onClick={onEmailClick}
@@ -49,7 +49,7 @@ const Enter: NextPage = () => {
               className={cls(
                 "pb-4 font-medium text-sm border-b-2",
                 method === "phone"
-                  ? " border-orange-500 text-orange-400"
+                  ? " border-purple-500 text-purple-400"
                   : "border-transparent hover:text-gray-400 text-gray-500"
               )}
               onClick={onPhoneClick}
@@ -84,10 +84,16 @@ const Enter: NextPage = () => {
             />
           ) : null}
           {method === "email" ? (
-            <Button text={loading ? "Loading" : "Get login link"} />
+            <Button
+              text={loading ? "Loading" : "check email"}
+              color={"bg-purple-500 hover:bg-purple-600 focus:ring-purple-500"}
+            />
           ) : null}
           {method === "phone" ? (
-            <Button text={loading ? "Loading" : "Get one-time password"} />
+            <Button
+              text={loading ? "Loading" : "check phone number"}
+              color={"bg-purple-500 hover:bg-purple-600 focus:ring-purple-500"}
+            />
           ) : null}
         </form>
 
