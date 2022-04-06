@@ -7,16 +7,18 @@ const Home: NextPage = () => {
   return (
     <Layout title="홈" hasTabBar>
       <div className="flex flex-col space-y-5 divide-y">
-        {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, i) => (
-          <Item
-            id={i}
-            key={i}
-            title="iPhone 14"
-            price={99}
-            comments={1}
-            hearts={1}
-          />
-        ))}
+        {Array(10)
+          .fill(1)
+          .map((_, i) => (
+            <Item
+              id={i}
+              key={i}
+              title="iPhone 14"
+              price={99}
+              comments={1}
+              hearts={1}
+            />
+          ))}
         <FloatingButton href="/items/upload">
           <svg
             className="h-6 w-6"
