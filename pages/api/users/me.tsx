@@ -16,4 +16,10 @@ async function handler(
   });
 }
 
-export default withApiSession(withHandler("GET", handler));
+export default withApiSession(
+  withHandler({
+    method: "GET",
+    handler,
+  })
+);
+// "get, fn, false"  <-이렇게 인자를 보내는것보다 위에처럼 명시해서 보내는게 누가봐도 알 수 있다
