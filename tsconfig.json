@@ -13,13 +13,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true,
-    "baseUrl": ".",
-    "paths": {
-      "@libs/*": ["libs/*"],
-      "@components/*": ["components/*"]
-      // "@/*": ["src/*"] 이건 src안에서 관리 할 때 참 좋음 !!!
-    }
+    "incremental": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
