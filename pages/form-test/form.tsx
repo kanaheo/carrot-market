@@ -27,8 +27,8 @@ export default function Forms() {
     setPassword(value);
   };
   const onSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
-    // submit하기전에 고려해야하는것이 너무 많다 ㅜ ㅜ 이메일이 짧으면 .... 유저이름 짧으면... 패스월드 짧으면...
-    // 이렇게 스스로 하기가 너무 많고 안하는것도 있을수도 있고 고려해야할게 너무너무 많다 !!
+    // submit하기전에 고려해야하는것이 너무 많습니다 이메일이 짧으면 .... 유저이름 짧으면... 패스월드 짧으면...
+    // 이렇게 스스로 하기가 너무 많고 안하는것도 있을수도 있고 고려해야할게 너무너무 많습니다 !!
     event.preventDefault();
     if (username === "" || email === "" || password === "") {
       setFormErrors("All fields are required");
@@ -40,6 +40,7 @@ export default function Forms() {
   return (
     <form onSubmit={onSubmit}>
       <input
+        className="bg-yellow-200"
         value={username}
         onChange={onUsernameChange}
         type="text"
@@ -47,8 +48,9 @@ export default function Forms() {
         required
         minLength={5}
       />
-      {/* 위에서 required, minLength는 크롬 개발자툴에서 지우면 안먹힌다 !!! 즉 이렇게 하면 강력하지 않아 !  */}
+      {/* 위에서 required, minLength는 크롬 개발자툴에서 지우면 안먹힌다 !!! 즉 이렇게 하면 강력하지 않습니다 !  */}
       <input
+        className="bg-blue-200"
         value={email}
         onChange={onEmailChange}
         type="email"
@@ -57,6 +59,7 @@ export default function Forms() {
       />
       {emailError}
       <input
+        className="bg-purple-200"
         value={password}
         onChange={onPasswordChange}
         type="password"

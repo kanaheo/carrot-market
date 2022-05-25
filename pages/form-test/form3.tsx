@@ -4,29 +4,48 @@ interface LoginForm {
   username: string;
   password: string;
   email: string;
+  errors?: string;
 }
 
 export default function Forms() {
+  // react from hook사용 했을 때
+  // 우리가 원하는건 전부 useForm에서 나온다 !
+  // 밑에 register함수는 input과 state를 연결시켜주는 역할을 함
   const {
     register,
+    watch,
     handleSubmit,
     formState: { errors },
+    reset,
+    resetField,
   } = useForm<LoginForm>({
     mode: "onChange",
   });
-  const onValid = (data: LoginForm) => {};
-  const onInvalid = (errors: FieldErrors) => {};
+  // console.log(register)
+  // {...register("username")} -> name="username" onChange="....."..... form.tsx 에서
+  // value = { username };
+  // onChange = { onUsernameChange };   이거랑 같다 !
+
+  // 또한!! register에서 required를 이용하기 onSubmit={handleSubmit(onValid)} 해야함 !
+  //  {...register("username", {
+  //     required: true
+  //   })} 포커스까지 해준다 !
+
+  const onValid = (data: LoginForm) => {
+    console.log("onvalid");
+    resetField("password");
+  };
+  const onInvalid = (errors: FieldErrors) => {
+    console.log(errors);
+  };
   return (
-    <form className="mt-10" onSubmit={handleSubmit(onValid, onInvalid)}>
+    <form onSubmit={handleSubmit(onValid, onInvalid)}>
       <div>
         <input
           className="bg-yellow-200"
           {...register("username", {
-            required: "Username is required",
-            minLength: {
-              message: "5글자 이상 입력하세요",
-              value: 5,
-            },
+            required: "true",
+            minLength: 5,
           })}
           type="text"
           placeholder="Username"
@@ -55,10 +74,8 @@ export default function Forms() {
           type="password"
           placeholder="Password"
         />
-        {errors.password?.message}
       </div>
-      <br />
-      <input className="border-2" type="submit" value="생성하기" />
+      <input type="submit" value="Create Account" />
     </form>
   );
 }
