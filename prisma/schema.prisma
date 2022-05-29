@@ -6,6 +6,8 @@ generator client {
   previewFeatures = ["referentialIntegrity"]
 }
 
+// 주의! 혹시라도 여기서 자동저장이 잘 안된다면 referentialIntegrity 이거 잠깐 주석하고 push 할 때는 풀어야한다.
+
 datasource db {
   provider             = "mysql"
   url                  = env("DATABASE_URL")
@@ -18,6 +20,18 @@ model User {
   email     String?  @unique
   name      String
   avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  tokens    Token[]
+}
+
+// 밑에 relation에 fields에서는 token안에 있는것을 참조해야함 userIds이면 userIds를 참조해야함 token 안에서
+
+model Token {
+  id        Int      @id @default(autoincrement())
+  payload   String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
