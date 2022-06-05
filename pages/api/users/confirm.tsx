@@ -1,37 +1,32 @@
-import { withIronSessionApiRoute } from "iron-session/next";
 import { NextApiRequest, NextApiResponse } from "next";
 import withHandler, { ResponseType } from "@libs/server/withHandler";
 import client from "@libs/server/client";
-
-declare module "iron-session" {
-  interface IronSessionData {
-    user?: {
-      id: number;
-    };
-  }
-}
+import { withApiSession } from "@libs/server/withSession";
 
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
   const { token } = req.body;
-  const exists = await client.token.findUnique({
+  const foundToken = await client.token.findUnique({
     where: {
       payload: token,
     },
   });
-  if (!exists) return res.status(404).end();
+  if (!foundToken) return res.status(404).end();
   req.session.user = {
-    id: exists.userId,
+    id: foundToken.userId,
   };
 
   await req.session.save();
+  // 밑에는 위에서 토큰을 다 사용하고 1번만 사용하고 버리기 위해서 삭제한다. 한번하고 삭제하는게 안전한가?
+  await client.token.deleteMany({
+    where: {
+      userId: foundToken.userId,
+    },
+  });
 
-  res.status(200).end();
+  res.json({ ok: true });
 }
 
-export default withIronSessionApiRoute(withHandler("POST", handler), {
-  cookieName: "carrotsession",
-  password: "012481924817812451241924719274917249871294719274912749874",
-});
+export default withApiSession(withHandler("POST", handler));
