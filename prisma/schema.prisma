@@ -24,6 +24,7 @@ model User {
   updatedAt DateTime  @updatedAt
   tokens    Token[]
   products  Product[]
+  fav       Fav[]
 }
 
 // 밑에 relation에 fields에서는 token안에 있는것을 참조해야함 userIds이면 userIds를 참조해야함 token 안에서
@@ -47,4 +48,15 @@ model Product {
   description String   @db.MediumText
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  favs        Fav[]
+}
+
+model Fav {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
