@@ -7,8 +7,8 @@ interface UseCoordState {
 
 export default function useCoords() {
   const [coords, setCoords] = useState<UseCoordState>({
-    latitude: null,
-    longitude: null,
+    latitude: 0,
+    longitude: 0,
   });
   const onSuccess = ({
     coords: { latitude, longitude },
