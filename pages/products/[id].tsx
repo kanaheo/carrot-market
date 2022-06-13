@@ -27,12 +27,16 @@ const ItemDetail: NextPage = () => {
   const { data, mutate: boundMutate } = useSWR<ItemDetailResponse>(
     router.query.id ? `/api/products/${router.query.id}` : null
   );
-  const [toggleFav] = useMutation(`/api/products/${router.query.id}/fav`);
+  const [toggleFav, { loading }] = useMutation(
+    `/api/products/${router.query.id}/fav`
+  );
   const onFavClick = () => {
     if (!data) return;
     boundMutate((prev) => prev && { ...prev, isLiked: !prev.isLiked }, false);
     // mutate("/api/users/me", (prev: any) => ({ ok: !prev.ok }), false);
-    toggleFav({});
+    if (!loading) {
+      toggleFav({});
+    }
   };
   return (
     <Layout canGoBack>
