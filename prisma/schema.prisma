@@ -15,19 +15,24 @@ datasource db {
 }
 
 model User {
-  id         Int         @id @default(autoincrement())
-  phone      String?     @unique
-  email      String?     @unique
-  name       String
-  avatar     String?
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
-  tokens     Token[]
-  products   Product[]
-  fav        Fav[]
-  posts      Post[]
-  answers    Answer[]
-  wonderings Wondering[]
+  id              Int         @id @default(autoincrement())
+  phone           String?     @unique
+  email           String?     @unique
+  name            String
+  avatar          String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  tokens          Token[]
+  products        Product[]
+  posts           Post[]
+  answers         Answer[]
+  wonderings      Wondering[]
+  writtenReviews  Review[]    @relation(name: "writtenReviews") //Review에서 user를 2개쓰는데 서로 구별하기 위해서
+  receivedReviews Review[]    @relation(name: "receivedReviews") //Review에서 user를 2개쓰는데 서로 구별하기 위해서
+  fav             Fav[]
+  sales           Sale[]
+  purchases       Purchase[]
+  record          Record[]
 }
 
 // 밑에 relation에 fields에서는 token안에 있는것을 참조해야함 userIds이면 userIds를 참조해야함 token 안에서
@@ -43,16 +48,19 @@ model Token {
 
 // 상품
 model Product {
-  id          Int      @id @default(autoincrement())
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id          Int        @id @default(autoincrement())
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      Int
   image       String
   name        String
   price       Int
-  description String   @db.MediumText
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  description String     @db.MediumText
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
   favs        Fav[]
+  sales       Sale[]
+  purchases   Purchase[]
+  records     Record[]
 }
 
 // 좋아하는것
@@ -66,7 +74,7 @@ model Fav {
   updatedAt DateTime @updatedAt
 }
 
-// 동네생활에서 게시판 글 1개1개에 대한거
+// 동네생활에서 게시판 글 1개1개에 대한거 게시글
 model Post {
   id         Int         @id @default(autoincrement())
   user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -101,4 +109,57 @@ model Wondering {
   postId    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Review {
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  review       String   @db.MediumText
+  createdBy    User     @relation(name: "writtenReviews", fields: [createdById], references: [id], onDelete: Cascade) // 작성자
+  createdById  Int
+  createdFor   User     @relation(name: "receivedReviews", fields: [createdForId], references: [id], onDelete: Cascade) // 받은사람
+  createdForId Int
+}
+
+// 판매내역
+model Sale {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// 구매내역
+model Purchase {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Record랑 Kind테이블은 Fav, Sale, Purchase가 비슷비슷하니까 아래에서 대체 할 수 있게
+// TODO 나중에는 Fav, Sale, Purchase이거 만들지 말고 record랑 kind만 해서 비슷한것은 묶어서 할 수 있게 해보자
+// 또한 뭐든지 먼저 할 때는 model을 다 만들고 해야한다 !! ( 물론 추가 할 때도 있겠지만 !! )
+model Record {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId Int
+  createdAt DateTime @default(now())
+  kind      Kind
+  updatedAt DateTime @updatedAt
+}
+
+enum Kind {
+  Purchase
+  Sale
+  Fav
 }
