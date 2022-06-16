@@ -120,6 +120,7 @@ model Review {
   createdById  Int
   createdFor   User     @relation(name: "receivedReviews", fields: [createdForId], references: [id], onDelete: Cascade) // 받은사람
   createdForId Int
+  score        Int      @default(1)
 }
 
 // 판매내역
