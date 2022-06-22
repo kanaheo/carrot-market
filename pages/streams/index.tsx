@@ -10,12 +10,14 @@ interface StreamsResponse {
   streams: Stream[];
 }
 
+page = page - 1;
+
 const Streams: NextPage = () => {
-  const { data } = useSWR<StreamsResponse>(`/api/streams`);
+  const { data } = useSWR<StreamsResponse>(`/api/streams?page=1`);
   return (
     <Layout hasTabBar title="라이브">
       <div className=" divide-y-[1px] space-y-4">
-        {data?.streams.map((stream) => (
+        {data?.streams?.map((stream) => (
           <Link key={stream.id} href={`/streams/${stream.id}`}>
             <a className="pt-4 block  px-4">
               <div className="w-full rounded-md shadow-sm bg-slate-300 aspect-video" />
