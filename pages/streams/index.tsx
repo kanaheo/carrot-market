@@ -10,8 +10,6 @@ interface StreamsResponse {
   streams: Stream[];
 }
 
-page = page - 1;
-
 const Streams: NextPage = () => {
   const { data } = useSWR<StreamsResponse>(`/api/streams?page=1`);
   return (
