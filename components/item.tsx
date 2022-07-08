@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 interface ItemProps {
@@ -5,14 +6,28 @@ interface ItemProps {
   id: number;
   price: number;
   hearts: number;
+  image?: string;
 }
 
-export default function Item({ title, price, hearts, id }: ItemProps) {
+export default function Item({ title, price, hearts, id, image }: ItemProps) {
+  console.log(image);
   return (
     <Link href={`/products/${id}`}>
       <a className="flex px-4 pt-5 cursor-pointer justify-between">
         <div className="flex space-x-4">
-          <div className="w-20 h-20 bg-gray-400 rounded-md" />
+          {image !== "xx" ? (
+            <div className="relative">
+              <Image
+                width={80}
+                height={80}
+                src={`https://imagedelivery.net/7VbZB4oVIlSndB1f5dV2Pw/${image}/public`}
+                className="w-20 h-20 bg-gray-400 rounded-md"
+                alt="product"
+              />
+            </div>
+          ) : (
+            <div className="w-20 h-20 bg-gray-400 rounded-md" />
+          )}
           <div className="pt-2 flex flex-col">
             <h3 className="text-sm font-medium text-gray-900">{title}</h3>
             <span className="font-medium mt-1 text-gray-900">${price}</span>
