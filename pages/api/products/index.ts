@@ -41,6 +41,14 @@ async function handler(
       },
     });
 
+    if (product) {
+      const chats = await client.chatRoom.create({
+        data: {
+          productId: product?.id,
+        },
+      });
+    }
+
     res.json({
       ok: true,
       product,

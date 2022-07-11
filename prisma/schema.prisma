@@ -35,6 +35,7 @@ model User {
   record          Record[]
   streams         Stream[]
   messages        Message[]
+  chat            Chat[]
 }
 
 // 밑에 relation에 fields에서는 token안에 있는것을 참조해야함 userIds이면 userIds를 참조해야함 token 안에서
@@ -63,6 +64,8 @@ model Product {
   sales       Sale[]
   purchases   Purchase[]
   records     Record[]
+  chat        Chat[]
+  chatRoom    ChatRoom[]
 }
 
 // 좋아하는것
@@ -190,4 +193,26 @@ model Message {
   message   String   @db.MediumText
   stream    Stream   @relation(fields: [streamId], references: [id], onDelete: Cascade)
   streamId  Int
+}
+
+model ChatRoom {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  chat      Chat[]
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId Int
+}
+
+model Chat {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  chatContent String   @db.MediumText
+  chatRoom    ChatRoom @relation(fields: [chatRoomId], references: [id], onDelete: Cascade)
+  chatRoomId  Int
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      Int
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId   Int
 }

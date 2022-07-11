@@ -23,6 +23,11 @@ async function handler(
           avatar: true,
         },
       },
+      chatRoom: {
+        select: {
+          id: true,
+        },
+      },
     },
   });
   const terms = product?.name.split(" ").map((word) => ({

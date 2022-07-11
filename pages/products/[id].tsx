@@ -4,7 +4,7 @@ import Layout from "@components/layout";
 import { useRouter } from "next/router";
 import useSWR, { useSWRConfig } from "swr";
 import Link from "next/link";
-import { Product, User } from "@prisma/client";
+import { ChatRoom, Product, User } from "@prisma/client";
 import useMutation from "@libs/client/useMutation";
 import { cls } from "@libs/client/utils";
 import useUser from "@libs/client/useUser";
@@ -12,6 +12,7 @@ import Image from "next/image";
 
 interface ProductWithUser extends Product {
   user: User;
+  chatRoom: ChatRoom[];
 }
 interface ItemDetailResponse {
   ok: boolean;
@@ -44,6 +45,7 @@ const ItemDetail: NextPage = () => {
                 src={`https://imagedelivery.net/7VbZB4oVIlSndB1f5dV2Pw/${data?.product?.image}/public`}
                 className="bg-slate-300 object-corver"
                 layout="fill"
+                alt="product"
               />
             ) : (
               ""
@@ -56,7 +58,7 @@ const ItemDetail: NextPage = () => {
                 height={48}
                 src={`https://imagedelivery.net/7VbZB4oVIlSndB1f5dV2Pw/${data?.product?.user?.avatar}/avatar`}
                 className="w-12 h-12 rounded-full bg-slate-300"
-                alt="fjajsdf"
+                alt="product"
               />
             ) : (
               ""
@@ -82,7 +84,13 @@ const ItemDetail: NextPage = () => {
             </span>
             <p className=" my-6 text-gray-700">{data?.product?.description}</p>
             <div className="flex items-center justify-between space-x-2">
-              <Button large text="Talk to seller" />
+              <Button
+                large
+                text="Talk to seller"
+                onClick={() =>
+                  router.push(`/chats/${data?.product?.chatRoom[0]?.id}`)
+                }
+              />
               <button
                 onClick={onFavClick}
                 className={cls(
