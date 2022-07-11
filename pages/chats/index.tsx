@@ -1,8 +1,16 @@
 import type { NextPage } from "next";
 import Link from "next/link";
 import Layout from "@components/layout";
+import useSWR from "swr";
+import { ChatRoom } from "@prisma/client";
+
+interface chatsResponse {
+  ok: boolean;
+  chaChatRoom: ChatRoom;
+}
 
 const Chats: NextPage = () => {
+  const { data } = useSWR<chatsResponse>(`/api/chats?page=1`);
   return (
     <Layout hasTabBar title="채팅">
       <div className="divide-y-[1px] ">

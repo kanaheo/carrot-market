@@ -45,6 +45,7 @@ async function handler(
       const chats = await client.chatRoom.create({
         data: {
           productId: product?.id,
+          userId: product?.userId,
         },
       });
     }

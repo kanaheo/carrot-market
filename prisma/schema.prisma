@@ -36,6 +36,7 @@ model User {
   streams         Stream[]
   messages        Message[]
   chat            Chat[]
+  chatRoom        ChatRoom[]
 }
 
 // 밑에 relation에 fields에서는 token안에 있는것을 참조해야함 userIds이면 userIds를 참조해야함 token 안에서
@@ -202,6 +203,8 @@ model ChatRoom {
   chat      Chat[]
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
 }
 
 model Chat {
