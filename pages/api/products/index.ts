@@ -42,9 +42,18 @@ async function handler(
     });
 
     if (product) {
-      const chats = await client.chatRoom.create({
+      await client.chatRoom.create({
         data: {
-          productId: product?.id,
+          product: {
+            connect: {
+              id: product?.id,
+            },
+          },
+          createdBy: {
+            connect: {
+              id: user?.id,
+            },
+          },
         },
       });
     }

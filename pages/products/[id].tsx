@@ -29,11 +29,19 @@ const ItemDetail: NextPage = () => {
     router.query.id ? `/api/products/${router.query.id}` : null
   );
   const [toggleFav] = useMutation(`/api/products/${router.query.id}/fav`);
+  const [toggleBuyId] = useMutation(
+    `/api/chats/${data?.product?.chatRoom[0]?.id}/buyIdUpdate`
+  );
   const onFavClick = () => {
     if (!data) return;
     boundMutate((prev) => prev && { ...prev, isLiked: !prev.isLiked }, false);
     // mutate("/api/users/me", (prev: any) => ({ ok: !prev.ok }), false);
     toggleFav({});
+  };
+
+  const updateBuyId = () => {
+    toggleBuyId({});
+    router.push(`/chats/${data?.product?.chatRoom[0]?.id}`);
   };
   return (
     <Layout canGoBack>
@@ -84,13 +92,7 @@ const ItemDetail: NextPage = () => {
             </span>
             <p className=" my-6 text-gray-700">{data?.product?.description}</p>
             <div className="flex items-center justify-between space-x-2">
-              <Button
-                large
-                text="Talk to seller"
-                onClick={() =>
-                  router.push(`/chats/${data?.product?.chatRoom[0]?.id}`)
-                }
-              />
+              <Button large text="Talk to seller" onClick={updateBuyId} />
               <button
                 onClick={onFavClick}
                 className={cls(

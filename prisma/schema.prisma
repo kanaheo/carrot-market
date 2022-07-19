@@ -36,6 +36,8 @@ model User {
   streams         Stream[]
   messages        Message[]
   chat            Chat[]
+  ownerUserId     ChatRoom[]  @relation(name: "ownerUserId")
+  buyUserId       ChatRoom[]  @relation(name: "buyUserId")
 }
 
 // 밑에 relation에 fields에서는 token안에 있는것을 참조해야함 userIds이면 userIds를 참조해야함 token 안에서
@@ -196,12 +198,16 @@ model Message {
 }
 
 model ChatRoom {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  chat      Chat[]
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  productId Int
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  chat        Chat[]
+  createdBy   User     @relation(name: "ownerUserId", fields: [createdById], references: [id], onDelete: Cascade) // 작성자
+  createdById Int
+  buyUser     User?    @relation(name: "buyUserId", fields: [buyUserId], references: [id], onDelete: Cascade) // 사는 사람
+  buyUserId   Int?
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId   Int
 }
 
 model Chat {
