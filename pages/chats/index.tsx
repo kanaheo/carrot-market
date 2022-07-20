@@ -21,7 +21,6 @@ interface ChatsResponse {
 const Chats: NextPage = () => {
   const { data } = useSWR<ChatsResponse>(`/api/chats/?page=1`);
   const { user, isLoading } = useUser();
-  console.log(data);
   return (
     <Layout hasTabBar title="채팅">
       <div className="divide-y-[1px] ">

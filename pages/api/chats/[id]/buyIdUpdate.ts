@@ -11,13 +11,23 @@ async function handler(
     query: { id },
     session: { user },
   } = req;
-  const chatRoom = await client.chatRoom.findFirst({
-    where: {
-      id: +id.toString(),
-    },
-  });
+
+  if (req.method === "GET") {
+    const chats = await client.chat.findMany({
+      where: {
+        chatRoomId: +id.toString(),
+      },
+    });
+
+    res.json({ ok: true, chats });
+  }
 
   if (req.method === "POST") {
+    const chatRoom = await client.chatRoom.findFirst({
+      where: {
+        id: +id.toString(),
+      },
+    });
     if (chatRoom) {
       await client.chatRoom.update({
         where: {
@@ -34,7 +44,7 @@ async function handler(
 
 export default withApiSession(
   withHandler({
-    methods: ["POST"],
+    methods: ["POST", "GET"],
     handler,
   })
 );
