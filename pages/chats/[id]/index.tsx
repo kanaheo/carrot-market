@@ -35,9 +35,6 @@ const ChatDetail: NextPage = () => {
     if (chatLoading) return;
     sendChat(form);
   };
-  console.log(user);
-  console.log(data);
-  console.log(data?.chats);
 
   useEffect(() => {
     if (chatData && chatData.ok) {
