@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "@components/button";
 import Input from "@components/input";
@@ -8,9 +8,16 @@ import { cls } from "@libs/client/utils";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 
-const Bs = dynamic(() => import("./bs"), { ssr: false });
+// const Bs = dynamic(() => import("./bs"), { ssr: false });
 // ssr은 서버단에서 실행할것인지 판단
 // 또한 props가 있으면 원래 있는 그대로 사용하면 된다 !
+
+const Bs = dynamic(
+  () =>
+    new Promise((resolve) => setTimeout(() => resolve(import("./bs")), 10000)),
+  { ssr: false, suspense: true, loading: () => <span>loading</span> }
+);
+
 interface EnterForm {
   email?: string;
   phone?: string;
@@ -128,7 +135,9 @@ const Enter: NextPage = () => {
               ) : null}
               {method === "phone" ? (
                 <>
-                  <Bs />
+                  <Suspense fallback="loading">
+                    <Bs />
+                  </Suspense>
 
                   <Input
                     register={register("phone", {
