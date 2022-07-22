@@ -6,7 +6,11 @@ import Input from "@components/input";
 import useMutation from "@libs/client/useMutation";
 import { cls } from "@libs/client/utils";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 
+const Bs = dynamic(() => import("./bs"), { ssr: false });
+// ssr은 서버단에서 실행할것인지 판단
+// 또한 props가 있으면 원래 있는 그대로 사용하면 된다 !
 interface EnterForm {
   email?: string;
   phone?: string;
@@ -123,16 +127,20 @@ const Enter: NextPage = () => {
                 />
               ) : null}
               {method === "phone" ? (
-                <Input
-                  register={register("phone", {
-                    required: true,
-                  })}
-                  name="phone"
-                  label="Phone number"
-                  type="number"
-                  kind="phone"
-                  required
-                />
+                <>
+                  <Bs />
+
+                  <Input
+                    register={register("phone", {
+                      required: true,
+                    })}
+                    name="phone"
+                    label="Phone number"
+                    type="number"
+                    kind="phone"
+                    required
+                  />
+                </>
               ) : null}
               {method === "email" ? (
                 <Button text={loading ? "Loading" : "Get login link"} />
