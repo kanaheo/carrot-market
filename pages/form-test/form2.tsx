@@ -17,7 +17,8 @@ export default function Forms() {
   const onValid = (data: LoginForm) => {};
   const onInvalid = (errors: FieldErrors) => {};
   return (
-    <form className="mt-10" onSubmit={handleSubmit(onValid, onInvalid)}>
+    // <form className="mt-10" onSubmit={handleSubmit(onValid, onInvalid)}>
+    <form className="mt-10" onSubmit={handleSubmit(onValid)}>
       <div>
         <input
           className="bg-yellow-200"

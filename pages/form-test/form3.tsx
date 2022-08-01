@@ -39,7 +39,8 @@ export default function Forms() {
     console.log(errors);
   };
   return (
-    <form onSubmit={handleSubmit(onValid, onInvalid)}>
+    // <form onSubmit={handleSubmit(onValid, onInvalid)}>
+    <form onSubmit={handleSubmit(onValid)}>
       <div>
         <input
           className="bg-yellow-200"

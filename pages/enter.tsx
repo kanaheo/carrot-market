@@ -13,6 +13,7 @@ import dynamic from "next/dynamic";
 // 또한 props가 있으면 원래 있는 그대로 사용하면 된다 !
 
 const Bs = dynamic(
+  //@ts-ignore
   () =>
     new Promise((resolve) => setTimeout(() => resolve(import("./bs")), 10000)),
   { ssr: false, suspense: true, loading: () => <span>loading</span> }
