@@ -13,11 +13,11 @@ const Home: NextPage = () => {
           <span className="text-gray-500">Grey Chair</span>
           <span className="font-semibold">$19</span>
         </div>
-        <div className="flex justify-between mt-2 pt-2 border-t-2 border-dashed">
+        <div className="flex justify-between pt-2 border-t-2 border-dashed">
           <span>Total</span>
           <span className="font-semibold">$10</span>
         </div>
-        <div className="mt-5 bg-blue-500 text-white p-3 text-center rounded-xl w-2/4 mx-auto ">
+        <div className="mt-5 bg-blue-500 text-white p-3 text-center rounded-xl w-2/4 mx-auto">
           Checkout
         </div>
       </div>
