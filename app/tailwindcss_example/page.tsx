@@ -2,11 +2,14 @@ export default function Home() {
   // hover, group 등등 연습
   return (
     <div className="bg-slate-400 py-20 px-20 grid gap-10 min-h-screen">
-      <div className="bg-white p-6 rounded-3xl shadow-xl">
+      <div className="bg-white sm:bg-red-400 md:bg-teal-400 lg:bg-indigo-400 xl:bg-yellow-400 2xl:bg-pink-500 p-6 rounded-3xl shadow-xl">
         <span className="font-semibold text-2xl">Select Item</span>
         <ul>
           {[1, 2, 3, 4, 5].map((i) => (
-            <div key={i} className="flex justify-between my-2 odd:bg-blue-50 even:bg-yellow-500">
+            <div
+              key={i}
+              className="flex justify-between my-2 odd:bg-blue-50 even:bg-yellow-500"
+            >
               <span className="text-gray-500">Grey Chair</span>
               <span className="font-semibold">$19</span>
             </div>
