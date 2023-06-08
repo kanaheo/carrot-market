@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import Link from "next/link";
 import Layout from "../components/layout";
 
 const Chats: NextPage = () => {
@@ -6,9 +7,10 @@ const Chats: NextPage = () => {
     <Layout hasTabBar title="채팅">
       <div className="divide-y-[1px] ">
         {[1, 1, 1, 1, 1, 1, 1].map((_, i) => (
-          <div
-            key={i}
+          <Link
             className="flex px-4 cursor-pointer py-3 items-center space-x-3"
+            href={`/chats/${i}`}
+            key={i}
           >
             <div className="w-12 h-12 rounded-full bg-slate-300" />
             <div>
@@ -17,7 +19,7 @@ const Chats: NextPage = () => {
                 See you tomorrow in the corner at 2pm!
               </p>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </Layout>
