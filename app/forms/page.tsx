@@ -1,11 +1,11 @@
 "use client";
-import { useState } from "react";
 import { FieldErrors, useForm } from "react-hook-form";
 
 interface LoginForm {
   username: string;
   password: string;
   email: string;
+  errors?: string;
 }
 
 export default function Forms() {
@@ -13,7 +13,14 @@ export default function Forms() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginForm>();
+    watch,
+    setError,
+    setValue,
+    reset,
+    resetField,
+  } = useForm<LoginForm>({
+    mode: "onChange",
+  });
   // const {
   //   register,
   //   handleSubmit,
@@ -21,11 +28,9 @@ export default function Forms() {
   // } = useForm<LoginForm>({
   //   mode: "all" // onchange, onblur ...
   // });
-
   const onValid = (data: LoginForm) => {
     console.log("im valid bby");
   };
-
   const onInvalid = (errors: FieldErrors) => {
     console.log(errors);
   };
@@ -43,6 +48,7 @@ export default function Forms() {
         type="text"
         placeholder="Username"
       />
+      {errors.username?.message}
       <input
         {...register("email", {
           required: "Email is required",
@@ -56,13 +62,12 @@ export default function Forms() {
       />
       {errors.email?.message}
       <input
-        {...register("password", {
-          required: "Password is required",
-        })}
+        {...register("password", { required: "Password is required" })}
         type="password"
         placeholder="Password"
       />
       <input type="submit" value="Create Account" />
+      {errors.errors?.message}
     </form>
   );
 }
