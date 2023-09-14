@@ -1,11 +1,11 @@
-import client from "@/app/libs/client";
+import client from "@/app/libs/server/client";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   const client2 = await client.user.create({
     data: {
-      email: "hasdfi22",
-      name: "nnasdfn22",
+      email: "hasdfi22cc",
+      name: "nnasdfn22cc",
     },
   });
 
