@@ -7,7 +7,11 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const data = await req.json();
     return NextResponse.json({ ok: true });
   } catch (err) {
-    return new NextResponse("Error content", { status: 500 });
+    // 개발자 툴 보면 status정보나옴 statusText를 이용해서 커스텀도 가능
+    return new NextResponse("Error content", {
+      status: 500,
+      statusText: "Error!!",
+    });
   }
 }
 
@@ -17,7 +21,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
     console.log(data);
     return NextResponse.json({ ok: true });
   } catch (error) {
-    // 개발자 툴 보면 status정보나옴
-    return new NextResponse("Error content", { status: 500 });
+    return new NextResponse("Error content", {
+      status: 500,
+    });
   }
 }
