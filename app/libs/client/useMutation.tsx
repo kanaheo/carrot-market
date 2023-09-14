@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+// POST만 위한 useMutation
+
 interface UseMutationState {
   loading: boolean;
   data?: object;

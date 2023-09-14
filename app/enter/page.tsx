@@ -14,6 +14,8 @@ interface EnterForm {
 }
 
 const Enter: NextPage = () => {
+  // mutation이란 데이터를 백엔드에 post로 보내면 데이터베이스의 상태를 mutate(변경) 할 수 있다 이걸 mutation이라고 함 !
+  // 밑에는 enter을 호출하면 fetch로 post할것이다라는 의미로 사용함 !!!
   const [enter, { loading, data, error }] = useMutation("/api/users/enter");
   const [submitting, setSubmitting] = useState(false);
   const { register, handleSubmit, reset } = useForm<EnterForm>();
