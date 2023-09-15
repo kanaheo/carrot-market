@@ -1,4 +1,4 @@
-import client from "@/app/libs/server/client";
+import client from "@/libs/server/client";
 import { NextResponse, NextRequest } from "next/server";
 
 export async function GET(req: NextRequest, res: NextResponse) {
@@ -17,10 +17,25 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
-    const data = await req.json();
-    console.log(data);
+    const { email, phone } = await req.json();
+    const payload = phone ? { phone: +phone } : { email };
+    // upsert란 ? where로 user가 없으면 create하거나 user를 update를 하려고 ~ 결과적으로 return 값은 user
+    const user = await client.user.upsert({
+      where: {
+        ...payload,
+      },
+      create: {
+        name: "kknkkm",
+        ...payload,
+      },
+      update: {},
+    });
+
+    console.log(user);
+
     return NextResponse.json({ ok: true });
   } catch (error) {
+    console.log(error);
     return new NextResponse("Error content", {
       status: 500,
     });
