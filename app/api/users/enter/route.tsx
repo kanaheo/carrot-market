@@ -19,19 +19,24 @@ export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const { email, phone } = await req.json();
     const payload = phone ? { phone: +phone } : { email };
-    // upsert란 ? where로 user가 없으면 create하거나 user를 update를 하려고 ~ 결과적으로 return 값은 user
-    const user = await client.user.upsert({
-      where: {
-        ...payload,
+    const token = await client.token.create({
+      data: {
+        payload: "1234121",
+        user: {
+          connectOrCreate: {
+            where: {
+              ...payload,
+            },
+            create: {
+              name: "kknkkm",
+              ...payload,
+            },
+          },
+        },
       },
-      create: {
-        name: "kknkkm",
-        ...payload,
-      },
-      update: {},
     });
 
-    console.log(user);
+    console.log(token);
 
     return NextResponse.json({ ok: true });
   } catch (error) {
