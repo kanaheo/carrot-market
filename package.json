@@ -1,0 +1,32 @@
+{
+  "name": "kknkkm-carrot",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.3.1",
+    "@sendgrid/mail": "^7.6.2",
+    "@tailwindcss/forms": "^0.5.0",
+    "iron-session": "^6.1.2",
+    "next": "^12.1.2",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-hook-form": "^7.29.0",
+    "twilio": "^3.76.0"
+  },
+  "devDependencies": {
+    "@types/node": "17.0.18",
+    "@types/react": "17.0.39",
+    "autoprefixer": "^10.4.2",
+    "eslint": "8.9.0",
+    "eslint-config-next": "12.0.10",
+    "postcss": "^8.4.6",
+    "prisma": "^5.3.1",
+    "tailwindcss": "^3.0.22",
+    "typescript": "4.5.5"
+  }
+}
